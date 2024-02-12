@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import firebaseApp from "../../firebase.config";
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 
@@ -40,6 +42,23 @@ const Auth = () => {
     }
   };
 
+  const monitorAuthState = async () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user);
+        console.log("User logged in");
+      } else {
+        console.log("User not logged in");
+      }
+    });
+  };
+
+  monitorAuthState();
+
+  const signUserOut = async () => {
+    await signOut(auth);
+  };
+
   return (
     <>
       <label>
@@ -50,8 +69,11 @@ const Auth = () => {
         Password
         <input type="password" onChange={(e) => setPassword(e.target.value)} />
       </label>
-      <button type="submit" onClick={signUpEmailPassword}>
+      <button type="submit" onClick={signInEmailPassword}>
         Log in
+      </button>
+      <button type="submit" onClick={signUserOut}>
+        Sign out
       </button>
     </>
   );

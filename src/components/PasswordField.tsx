@@ -27,7 +27,9 @@ export const PasswordField = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <FormControl>
-        <FormLabel htmlFor="password">Password</FormLabel>
+        <FormLabel htmlFor="password">
+          {props.forReEnter ? "Confirm Password" : "Password"}
+        </FormLabel>
         <InputGroup>
           <InputRightElement>
             <IconButton

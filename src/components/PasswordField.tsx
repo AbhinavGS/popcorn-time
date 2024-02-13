@@ -11,11 +11,12 @@ import {
 import { forwardRef, useRef } from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
-interface CustomProps {
+interface PasswordProps {
   forReEnter?: boolean;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export const PasswordField = forwardRef<HTMLInputElement, CustomProps>(
+export const PasswordField = forwardRef<HTMLInputElement, PasswordProps>(
   (props, ref) => {
     const { isOpen, onToggle } = useDisclosure();
     const inputRef = useRef<HTMLInputElement>(null);
@@ -48,6 +49,7 @@ export const PasswordField = forwardRef<HTMLInputElement, CustomProps>(
             name="password"
             type={isOpen ? "text" : "password"}
             autoComplete="current-password"
+            onChange={(e) => props.onChange?.(e)}
             required
             {...props}
           />

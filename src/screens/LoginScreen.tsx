@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Box,
   Button,
@@ -9,10 +11,54 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PasswordField } from "../components/PasswordField";
 
+import firebaseApp from "../firebase.config";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+
+const auth = getAuth(firebaseApp);
+
 const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const signInEmailPassword = async () => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(userCredentials.user);
+    } catch (error) {
+      console.log((error as FirebaseError).code === "auth/invalid-credential");
+    }
+  };
+
+  const monitorAuthState = async () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/home");
+        console.log("User logged in");
+      } else {
+        console.log("User not logged in");
+      }
+    });
+  };
+
+  monitorAuthState();
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
   return (
     <Container
       maxW="lg"
@@ -41,12 +87,18 @@ const LoginScreen = () => {
             <Stack spacing="5">
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" />
+                <Input
+                  id="email"
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </FormControl>
-              <PasswordField />
+              <PasswordField onChange={handlePasswordChange} />
             </Stack>
             <Stack spacing="6">
-              <Button isActive={false}>Sign in</Button>
+              <Button onClick={signInEmailPassword}>
+                Sign in
+              </Button>
             </Stack>
           </Stack>
         </Box>

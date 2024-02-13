@@ -1,17 +1,15 @@
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { PasswordField } from "../components/PasswordField";
 
 const SignUpScreen = () => {
@@ -26,7 +24,7 @@ const SignUpScreen = () => {
           <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
             <Heading size={{ base: "xs", md: "sm" }}>Create an account</Heading>
             <Text color="fg.muted">
-              Already have an account? <Link href="#">Sign in</Link>
+              Already have an account? <Link to="/">Sign in</Link>
             </Text>
           </Stack>
         </Stack>
@@ -46,12 +44,6 @@ const SignUpScreen = () => {
               <PasswordField />
               <PasswordField forReEnter={true} />
             </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
-              <Button variant="text" size="sm">
-                Forgot password?
-              </Button>
-            </HStack>
             <Stack spacing="6">
               <Button>Create account</Button>
             </Stack>

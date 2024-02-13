@@ -1,9 +1,9 @@
-import SignUpScreen from "./screens/SignUpScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 function App() {
   return (
     <>
-      <SignUpScreen />
+      <LoginScreen />
     </>
   );
 }

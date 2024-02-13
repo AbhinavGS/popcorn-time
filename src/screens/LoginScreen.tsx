@@ -1,17 +1,15 @@
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
-  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { PasswordField } from "../components/PasswordField";
 
 const LoginScreen = () => {
@@ -28,7 +26,7 @@ const LoginScreen = () => {
               Log in to your account
             </Heading>
             <Text color="fg.muted">
-              Don't have an account? <Link href="#">Sign up</Link>
+              Don't have an account? <Link to="/signup">Sign up</Link>
             </Text>
           </Stack>
         </Stack>
@@ -47,14 +45,8 @@ const LoginScreen = () => {
               </FormControl>
               <PasswordField />
             </Stack>
-            <HStack justify="space-between">
-              <Checkbox defaultChecked>Remember me</Checkbox>
-              <Button variant="text" size="sm">
-                Forgot password?
-              </Button>
-            </HStack>
             <Stack spacing="6">
-              <Button>Sign in</Button>
+              <Button isActive={false}>Sign in</Button>
             </Stack>
           </Stack>
         </Box>
